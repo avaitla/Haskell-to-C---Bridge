@@ -13,10 +13,14 @@ data Declaration = Declaration {
     demangled    :: String,
     attributes   :: [String],
     parent       :: Maybe Declaration
+    partial      :: String
 } deriving (Eq, Show, Read)
 
 getTopParent :: Declaration -> Declaration
 getTopParent d = maybe d getTopParent (parent d)
 
 class DeclType a where
-    getDeclType :: a -> String
+    getDeclType :: a -> Declaration
+
+instance DeclType Declaration where
+    getDeclType = id
